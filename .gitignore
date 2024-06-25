@@ -27,3 +27,4 @@ mega_cache-*.tar
 
 .elixir_ls/
 database/
+database_test/

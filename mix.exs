@@ -26,12 +26,12 @@ defmodule MegaCache.MixProject do
       # {:dep_from_hexpm, "~> 0.3.0"},
       # {:dep_from_git, git: "https://github.com/elixir-lang/my_dep.git", tag: "0.1.0"},
       # Add broadway and phoenix as deps so they are on the machine
-      {:broadway, ">= 1.1.0"},
-      {:phoenix, ">= 1.7.14"},
-      {:mnesia_rocksdb, git: "https://github.com/aeternity/mnesia_rocksdb.git", tag: "2.0.1"},
-      {:poison, "~> 6.0"},
-      {:httpoison, "~> 2.2"},
-      {:poolboy, "~> 1.5"}
+      # {:broadway, ">= 1.1.0"},
+      # {:phoenix, ">= 1.7.14"},
+      # {:mnesia_rocksdb, git: "https://github.com/aeternity/mnesia_rocksdb.git", tag: "2.0.1"},
+      # {:poison, "~> 6.0"},
+      # {:httpoison, "~> 2.2"},
+      # {:poolboy, "~> 1.5"}
     ]
   end
 end
