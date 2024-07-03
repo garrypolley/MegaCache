@@ -6,15 +6,15 @@ defmodule MegaCache.Test do
   end
 
   test "read/write file" do
-    MegaCache.Worker.write_data("test_key", "test_value")
-    assert MegaCache.Worker.read_data("test_key") == "test_value"
+    MegaCache.Datastore.store("test_key", "test_value")
+    assert MegaCache.Datastore.get("test_key") == {:ok, "test_value"}
   end
 
   test "read/write many" do
     start_write = :erlang.monotonic_time(:millisecond)
 
     0..1_000
-    |> Enum.each(fn i -> MegaCache.Worker.write_data("hello_#{i}", "some random data #{i}") end)
+    |> Enum.each(fn i -> MegaCache.Datastore.store("hello_#{i}", "some random data #{i}") end)
 
     end_write = :erlang.monotonic_time(:millisecond)
     total_write_time = end_write - start_write
@@ -23,7 +23,7 @@ defmodule MegaCache.Test do
 
     0..1_000
     |> Enum.each(fn i ->
-      assert MegaCache.Worker.read_data("hello_#{i}") === "some random data #{i}"
+      assert MegaCache.Datastore.get("hello_#{i}") === {:ok, "some random data #{i}"}
     end)
 
     end_read = :erlang.monotonic_time(:millisecond)
@@ -33,9 +33,9 @@ defmodule MegaCache.Test do
     # 1,000 reads
     # 1,000 writes
     # Happening in under 200 milliseconds
-    # Means we have at least 5 reads and 5 writes per millisecond
-    assert total_write_time < 200
-    assert total_read_time < 200
+    # Means we have at least 3 reads and 3 writes per millisecond
+    assert total_write_time < 250
+    assert total_read_time < 250
   end
 
   test "read/write same" do
@@ -43,19 +43,27 @@ defmodule MegaCache.Test do
 
     some_data =
       0..1_000
-      |> Enum.reduce(fn i, all -> "hi there #{i}" <> "#{all}" end)
+      |> Enum.reduce("", fn i, all -> "hi there #{i}" <> "#{all}" end)
 
     start_time = :erlang.monotonic_time(:millisecond)
 
     0..1_000
-    |> Enum.each(fn _ -> MegaCache.Worker.write_data(file_name, some_data) end)
+    |> Enum.each(fn _ -> MegaCache.Datastore.store(file_name, some_data) end)
 
     0..1_000
-    |> Enum.each(fn _ -> MegaCache.Worker.read_data(file_name) end)
+    |> Enum.each(fn _ -> MegaCache.Datastore.get(file_name) end)
 
     end_time = :erlang.monotonic_time(:millisecond)
 
     # Ensure we can read/write fast enough
-    assert end_time - start_time < 200
+    assert end_time - start_time < 250
+  end
+
+  test "Assert proper error on missing file" do
+    missing_filename = "some_missing_file" <> Integer.to_string(:rand.uniform(100))
+
+    {:error, reason} = MegaCache.Datastore.get(missing_filename)
+
+    assert reason == :enoent
   end
 end

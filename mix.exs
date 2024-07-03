@@ -15,7 +15,6 @@ defmodule MegaCache.MixProject do
   def application do
     [
       extra_applications: [:logger, :runtime_tools, :wx],
-      env: [file_path: ~c"./database"],
       mod: {MegaCache.Application, []}
     ]
   end
@@ -31,7 +30,8 @@ defmodule MegaCache.MixProject do
       # {:mnesia_rocksdb, git: "https://github.com/aeternity/mnesia_rocksdb.git", tag: "2.0.1"},
       # {:poison, "~> 6.0"},
       # {:httpoison, "~> 2.2"},
-      # {:poolboy, "~> 1.5"}
+      {:poolboy, "~> 1.5"},
+      {:plug_cowboy, "~> 2.6"}
     ]
   end
 end

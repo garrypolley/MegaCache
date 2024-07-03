@@ -6,7 +6,8 @@ defmodule MegaCache.System do
 
     Supervisor.start_link(
       [
-        MegaCache.Worker
+        MegaCache.Datastore,
+        MegaCache.Api
       ],
       strategy: :one_for_one
     )
