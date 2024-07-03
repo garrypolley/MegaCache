@@ -1,6 +1,9 @@
 defmodule MegaCache.System do
+  require Logger
+
   def start_link do
-    IO.puts("Starting Mega Cache System")
+    Logger.info("Starting Mega Cache System")
+
     Supervisor.start_link(
       [
         MegaCache.Worker

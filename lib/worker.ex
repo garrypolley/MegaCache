@@ -28,7 +28,6 @@ defmodule MegaCache.Worker do
       {:ok, file_data} -> {:reply, file_data, state}
       {:error, _} -> {:noreply, state}
     end
-
   end
 
   @impl GenServer

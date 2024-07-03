@@ -15,7 +15,7 @@ defmodule MegaCache.MixProject do
   def application do
     [
       extra_applications: [:logger, :runtime_tools, :wx],
-      env: [file_path: './database'],
+      env: [file_path: ~c"./database"],
       mod: {MegaCache.Application, []}
     ]
   end
