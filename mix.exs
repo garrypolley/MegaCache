@@ -28,8 +28,8 @@ defmodule MegaCache.MixProject do
       # {:broadway, ">= 1.1.0"},
       # {:phoenix, ">= 1.7.14"},
       # {:mnesia_rocksdb, git: "https://github.com/aeternity/mnesia_rocksdb.git", tag: "2.0.1"},
-      # {:poison, "~> 6.0"},
-      # {:httpoison, "~> 2.2"},
+      {:poison, "~> 6.0"},
+      {:httpoison, "~> 2.2"},
       {:poolboy, "~> 1.5"},
       {:plug_cowboy, "~> 2.6"}
     ]

@@ -17,9 +17,10 @@ defmodule MegaCache.Api do
   end
 
   get "envvars" do
-    env_data = Application.get_all_env(:mega_cache)
-    |> IO.inspect()
-    |> Enum.reduce("", fn (thing, all) ->
+    env_data =
+      Application.get_all_env(:mega_cache)
+      |> IO.inspect()
+      |> Enum.reduce("", fn thing, all ->
         {key, value} = thing
         "#{key}:#{value}\n" <> all
       end)
