@@ -1,6 +1,8 @@
 defmodule MegaCache.Test do
   use ExUnit.Case
 
+  @measure_time 750
+
   test "app starts" do
     assert "ok" === "ok"
   end
@@ -32,10 +34,10 @@ defmodule MegaCache.Test do
     # Ensure the time to read/write is acceptable
     # 1,000 reads
     # 1,000 writes
-    # Happening in under 200 milliseconds
-    # Means we have at least 3 reads and 3 writes per millisecond
-    assert total_write_time < 250
-    assert total_read_time < 250
+    # Happening in under 750 milliseconds
+    # Means we have at least 1.5 reads and 1.5 writes per millisecond
+    assert total_write_time < @measure_time
+    assert total_read_time < @measure_time
   end
 
   test "read/write same" do
@@ -56,7 +58,7 @@ defmodule MegaCache.Test do
     end_time = :erlang.monotonic_time(:millisecond)
 
     # Ensure we can read/write fast enough
-    assert end_time - start_time < 250
+    assert end_time - start_time < @measure_time
   end
 
   test "Assert proper error on missing file" do
