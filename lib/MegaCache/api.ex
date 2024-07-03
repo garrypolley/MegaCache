@@ -11,7 +11,7 @@ defmodule MegaCache.Api do
 
     Plug.Cowboy.child_spec(
       scheme: :http,
-      options: [port: String.to_integer(port)],
+      options: [port: port],
       plug: __MODULE__
     )
   end

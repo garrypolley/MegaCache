@@ -2,7 +2,7 @@ defmodule MegaCache.Datastore do
   require Logger
 
   def child_spec(_) do
-    db_folder = Application.get_env(:mega_cache, :file_path)
+    db_folder = Application.fetch_env!(:mega_cache, :file_path)
     File.mkdir_p(db_folder)
 
     Logger.info("Starting up MegaCache Datastore")

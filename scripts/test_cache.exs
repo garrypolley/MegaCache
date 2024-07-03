@@ -13,7 +13,7 @@ defmodule TestCacheRequester do
       )
 
     key = random_key()
-    http_port = Application.get_env(:mega_cache, :http_port)
+    http_port = Application.fetch_env!(:mega_cache, :http_port)
 
     case HTTPoison.post(
            "http://localhost:#{http_port}/data/#{key}",

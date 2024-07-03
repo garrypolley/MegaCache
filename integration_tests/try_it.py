@@ -2,13 +2,13 @@ import requests
 import random
 
 def create_body():
-    rando_stuff = random.randbytes(10_000)
-    return rando_stuff  * 1_000
+    rando_stuff = random.randbytes(100)
+    return rando_stuff * 100
 
 
 def submit_data(key, data):
     return requests.post(
-        f"http://localhost:5857/data/{key}",
+        f"http://localhost:5858/data/{key}",
         data=data
     )
 
