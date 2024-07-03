@@ -2,6 +2,7 @@ defmodule MegaCache.Test do
   use ExUnit.Case
 
   @measure_time 750
+  @num_ops 1_000
 
   test "app starts" do
     assert "ok" === "ok"
@@ -15,7 +16,7 @@ defmodule MegaCache.Test do
   test "read/write many" do
     start_write = :erlang.monotonic_time(:millisecond)
 
-    0..1_000
+    0..@num_ops
     |> Enum.each(fn i -> MegaCache.Datastore.store("hello_#{i}", "some random data #{i}") end)
 
     end_write = :erlang.monotonic_time(:millisecond)
@@ -23,7 +24,7 @@ defmodule MegaCache.Test do
 
     start_read = :erlang.monotonic_time(:millisecond)
 
-    0..1_000
+    0..@num_ops
     |> Enum.each(fn i ->
       assert MegaCache.Datastore.get("hello_#{i}") === {:ok, "some random data #{i}"}
     end)
@@ -44,15 +45,15 @@ defmodule MegaCache.Test do
     file_name = "mah_same_file.txt"
 
     some_data =
-      0..1_000
+      0..@num_ops
       |> Enum.reduce("", fn i, all -> "hi there #{i}" <> "#{all}" end)
 
     start_time = :erlang.monotonic_time(:millisecond)
 
-    0..1_000
+    0..@num_ops
     |> Enum.each(fn _ -> MegaCache.Datastore.store(file_name, some_data) end)
 
-    0..1_000
+    0..@num_ops
     |> Enum.each(fn _ -> MegaCache.Datastore.get(file_name) end)
 
     end_time = :erlang.monotonic_time(:millisecond)
