@@ -8,18 +8,16 @@ RUN apt-get install cmake -y
 WORKDIR /app
 
 # Copy your application code to the container
+ENV MIX_ENV="prod"
+
+RUN mix local.hex --force && mix local.rebar --force
+
 COPY . .
 
-# Install Hex + Rebar
-RUN mix local.hex --force && \
-    mix local.rebar --force
+RUN mix deps.get --only prod
+RUN mix release
 
-# Fetch and compile your Elixir dependencies
-RUN mix deps.get && \
-    mix deps.compile
+EXPOSE 5858
 
-# Compile your Elixir application
-RUN mix compile
-
-# The command to run when the container starts
-CMD ["mix", "run", "scripts/run.exs"]
+ENTRYPOINT ["/app/_build/prod/rel/mega_cache/bin/mega_cache"]
+CMD ["start"]

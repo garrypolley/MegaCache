@@ -3,6 +3,6 @@ services:
   app:
     build: .
     ports:
-      - "80:80"
+      - "5858:5858"
     volumes:
-      - .:/app
+      - ./docker_database:/app/database
