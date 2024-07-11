@@ -31,7 +31,7 @@ defmodule MegaCache.MixProject do
       {:poison, "~> 6.0"},
       {:httpoison, "~> 2.2"},
       {:poolboy, "~> 1.5"},
-      {:plug_cowboy, "~> 2.6"}
+      {:plug_cowboy, "~> 2.7"}
     ]
   end
 end
